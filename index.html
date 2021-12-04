@@ -8,30 +8,443 @@
     <p>Helliwoiselhfk</p>
     <script type="text/javascript">
         var tl;
-        
         function onLoad() {
-          var bandInfos = [
-            Timeline.createBandInfo({
-                width:          "70%", 
-                intervalUnit:   Timeline.DateTime.MONTH, 
-                intervalPixels: 100
-            }),
-            Timeline.createBandInfo({
-                width:          "30%", 
-                intervalUnit:   Timeline.DateTime.YEAR, 
-                intervalPixels: 200
-            })
-          ];
-          bandInfos[1].syncWith = 0;
-          bandInfos[1].highlight = true;
+            var eventSourceNobel = new Timeline.DefaultEventSource(0);
+            var eventSourceFascination = new Timeline.DefaultEventSource(0);
+            var eventSourceRi = new Timeline.DefaultEventSource(0);
+            var eventSourceGeometric = new Timeline.DefaultEventSource(0);
+            var eventSourcePhysical = new Timeline.DefaultEventSource(0);
+            var eventSourceChemical = new Timeline.DefaultEventSource(0);
+            var eventSourceStructure = new Timeline.DefaultEventSource(0);
+            var eventSourceInfo = new Timeline.DefaultEventSource(0);
+            var eventSourceStamp = new Timeline.DefaultEventSource(0);
+
+            var theme = Timeline.ClassicTheme.create();
+            theme.event.bubble.width = 320;
+            theme.event.bubble.height = 220;
+            theme.event.track.height = 1.5;
+            theme.event.track.gap = 0.1;
+            theme.ether.backgroundColors = [
+                "#D1CECA",
+                "#E7DFD6",
+                "#E8E8F4",
+                "#D0D0E8"
+            ];
+
+            theme.timeline_start = new Date(Date.UTC(-3099, 0, 1));
+            theme.timeline_stop  = new Date(Date.UTC(2100, 0, 1));
+
+            
+            var zones = [
+                {   start:    "1600",
+                    end:      "2100",
+                    magnify:  10,
+                    unit:     Timeline.DateTime.DECADE
+                },
+                {   start:    "1700",
+                    end:      "2015",
+                    magnify:  8,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 5
+                }
+            ];
+            var zonesNobel = [
+                {   start:    "1650",
+                    end:      "2100",
+                    magnify:  10,
+                    unit:     Timeline.DateTime.DECADE
+                },
+                {   start:    "1900",
+                    end:      "2020",
+                    magnify:  5,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 10
+                }
+            ];
+            var zonesFascination = [
+                {   start:    "1600",
+                    end:      "1900",
+                    magnify:  20,
+                    unit:     Timeline.DateTime.DECADE
+                },
+                {   start:    "1900",
+                    end:      "1975",
+                    magnify:  60,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 5
+                },
+                {   start:    "1975",
+                    end:      "2020",
+                    magnify:  40,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 10
+                }
+            ];
+            var zonesRi= [
+                {   start:    "1650",
+                    end:      "2100",
+                    magnify:  10,
+                    unit:     Timeline.DateTime.DECADE
+                },
+                {   start:    "1900",
+                    end:      "2020",
+                    magnify:  5,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 10
+                },
+                {   start:    "1910",
+                    end:      "1920",
+                    magnify:  4,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 1
+                }
+            ];
+            var zonesGeom = [
+                {   start:    "1500",
+                    end:      "1750",
+                    magnify:  20,
+                    unit:     Timeline.DateTime.DECADE
+                },
+                {   start:    "1750",
+                    end:      "1970",
+                    magnify:  75,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 10
+                },
+                {   start:    "1970",
+                    end:      "2000",
+                    magnify:  5,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 10
+                },
+                {   start:    "1920",
+                    end:      "1960",
+                    magnify:  2,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 5
+                }
+            ];
+            var zonesPhys = [
+                {   start:    "1650",
+                    end:      "1810",
+                    magnify:  20,
+                    unit:     Timeline.DateTime.DECADE
+                },
+                {   start:    "1810",
+                    end:      "1970",
+                    magnify:  90,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 10
+                },
+                {   start:    "1840",
+                    end:      "1860",
+                    magnify:  2,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 5
+                },
+                {   start:    "1950",
+                    end:      "1960",
+                    magnify:  2,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 5
+                },
+                {   start:    "1970",
+                    end:      "2000",
+                    magnify:  5,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 10
+                },
+                {   start:    "1920",
+                    end:      "1960",
+                    magnify:  2,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 5
+                }
+            ];
+            var zonesChem = [
+                {   start:    "1650",
+                    end:      "1900",
+                    magnify:  20,
+                    unit:     Timeline.DateTime.DECADE
+                },
+                {   start:    "1900",
+                    end:      "1970",
+                    magnify:  90,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 10
+                },
+                {   start:    "1915",
+                    end:      "1970",
+                    magnify:  3,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 2
+                },
+                {   start:    "1970",
+                    end:      "2000",
+                    magnify:  5,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 10
+                }
+            ];
+            var zonesStruct = [
+                {   start:    "1900",
+                    end:      "2100",
+                    magnify:  10,
+                    unit:     Timeline.DateTime.DECADE
+                },
+                {   start:    "1910",
+                    end:      "1970",
+                    magnify:  30,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 2
+                }
+            ];
+            var zonesInfo = [
+                {   start:    "1600",
+                    end:      "1930",
+                    magnify:  10,
+                    unit:     Timeline.DateTime.DECADE
+                },
+                {   start:    "1930",
+                    end:      "2015",
+                    magnify:  80,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 5
+                },
+                {   start:    "1990",
+                    end:      "2010",
+                    magnify:  2,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 2
+                },
+                {   start:    "2015",
+                    end:      "2200",
+                    magnify:  10,
+                    unit:     Timeline.DateTime.DECADE,
+                }
+            ];
+            var zonesStamp = [
+               
+                {   start:    "1900",
+                    end:      "2000",
+                    magnify:  60,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 5
+                },
+                {   start:    "2000",
+                    end:      "2013",
+                    magnify:  200,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 1
+                },
+                {   start:    "2013",
+                    end:      "2014",
+                    magnify:  300,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 1
+                },
+                {   start:    "2014",
+                    end:      "2015",
+                    magnify:  1600,
+                    unit:     Timeline.DateTime.MONTH,
+                    multiple: 1
+                },
+                {  
+                    start:    "2015",
+                    end:      "2020",
+                    magnify:  100,
+                    unit:     Timeline.DateTime.YEAR,
+                    multiple: 1
+                }
+            ];
+
+            var d = Timeline.DateTime.parseGregorianDateTime("1914");
+            var bandInfos = [
+                Timeline.createHotZoneBandInfo({
+                    width:          "20%", 
+                    intervalUnit:   Timeline.DateTime.CENTURY, 
+                    intervalPixels: 70,
+                    zones:          zonesNobel,
+                    eventSource:    eventSourceNobel,
+                    date:           d,
+                    showEventText:  false,
+                    trackHeight:    0.5,
+                    trackGap:       0.2,
+                    theme:          theme
+                }),
+                Timeline.createHotZoneBandInfo({
+                    width:          "20%", 
+                    intervalUnit:   Timeline.DateTime.CENTURY, 
+                    intervalPixels: 70,
+                    zones:          zonesFascination,
+                    eventSource:    eventSourceFascination,
+                    date:           d,
+                    showEventText:  false,
+                    trackHeight:    0.5,
+                    trackGap:       0.2,
+                    theme:          theme
+                }),
+                Timeline.createHotZoneBandInfo({
+                    width:          "20%", 
+                    intervalUnit:   Timeline.DateTime.CENTURY, 
+                    intervalPixels: 70,
+                    zones:          zonesRi,
+                    eventSource:    eventSourceRi,
+                    date:           d,
+                    showEventText:  false,
+                    trackHeight:    0.5,
+                    trackGap:       0.2,
+                    theme:          theme
+                }),
+                Timeline.createHotZoneBandInfo({
+                    width:          "20%", 
+                    intervalUnit:   Timeline.DateTime.CENTURY, 
+                    intervalPixels: 70,
+                    zones:          zonesGeom,
+                    eventSource:    eventSourceGeometric,
+                    date:           d,
+                    showEventText:  false,
+                    trackHeight:    0.5,
+                    trackGap:       0.2,
+                    theme:          theme
+                }),
+                Timeline.createHotZoneBandInfo({
+                    width:          "20%", 
+                    intervalUnit:   Timeline.DateTime.CENTURY, 
+                    intervalPixels: 70,
+                    zones:          zonesPhys,
+                    eventSource:    eventSourcePhysical,
+                    date:           d,
+                    showEventText:  false,
+                    trackHeight:    0.5,
+                    trackGap:       0.2,
+                    theme:          theme
+                }),
+                Timeline.createHotZoneBandInfo({
+                    width:          "20%", 
+                    intervalUnit:   Timeline.DateTime.CENTURY, 
+                    intervalPixels: 70,
+                    zones:          zonesChem,
+                    eventSource:    eventSourceChemical,
+                    date:           d,
+                    showEventText:  false,
+                    trackHeight:    0.5,
+                    trackGap:       0.2,
+                    theme:          theme
+                }),
+                Timeline.createHotZoneBandInfo({
+                    width:          "20%", 
+                    intervalUnit:   Timeline.DateTime.CENTURY, 
+                    intervalPixels: 70,
+                    zones:          zonesStruct,
+                    eventSource:    eventSourceStructure,
+                    date:           d,
+                    showEventText:  false,
+                    trackHeight:    0.5,
+                    trackGap:       0.2,
+                    theme:          theme
+                }),
+                Timeline.createHotZoneBandInfo({
+                    width:          "20%", 
+                    intervalUnit:   Timeline.DateTime.CENTURY, 
+                    intervalPixels: 70,
+                    zones:          zonesInfo,
+                    eventSource:    eventSourceInfo,
+                    date:           d,
+                    showEventText:  false,
+                    trackHeight:    0.5,
+                    trackGap:       0.2,
+                    theme:          theme
+                }),
+            
+                Timeline.createHotZoneBandInfo({
+                    width:          "20%", 
+                    intervalUnit:   Timeline.DateTime.CENTURY, 
+                    intervalPixels: 70,
+                    zones:          zonesStamp,
+                    eventSource:    eventSourceStamp,
+                    date:           d,
+                    showEventText:  false,
+                    trackHeight:    0.5,
+                    trackGap:       0.2,
+                    theme:          theme
+                 })
+             ];
+            bandInfos[0].highlight = true;
+
+            bandInfos[1].syncWith = 0;        
+            bandInfos[2].syncWith = 0;
+            bandInfos[3].syncWith = 0;
+            bandInfos[4].syncWith = 0;
+            bandInfos[5].syncWith = 0;
+            bandInfos[6].syncWith = 0;
+            bandInfos[7].syncWith = 0;
+            bandInfos[8].syncWith = 0;
+
+       
+            tl = Timeline.create(document.getElementById("tl"), bandInfos, Timeline.HORIZONTAL);
+            tl.loadXML("nobel.xml", function(xml, url) {
+                eventSourceNobel.loadXML(xml, url);
+                document.getElementById("nobel-event-count").innerHTML = eventSourceNobel.getCount();
+            });
+            tl.loadJSON("fascination.json", function(json, url) {
+                eventSourceFascination.loadJSON(json, url);
+                document.getElementById("structure-event-count").innerHTML = eventSourceFascination.getCount();
+            });
+            tl.loadJSON("timeline_RI.json", function(json, url) {
+                eventSourceRi.loadJSON(json, url);
+                document.getElementById("structure-event-count").innerHTML = eventSourceRi.getCount();
+            });
+            tl.loadJSON("geometric.json", function(json, url) {
+                eventSourceGeometric.loadJSON(json, url);
+                document.getElementById("geometric-event-count").innerHTML = eventSourceGeometric.getCount();
+            });
+            tl.loadJSON("physical.json", function(json, url) {
+                eventSourcePhysical.loadJSON(json, url);
+                document.getElementById("physical-event-count").innerHTML = eventSourcePhysical.getCount();
+            });
+            tl.loadJSON("chemical.json", function(json, url) {
+                eventSourceChemical.loadJSON(json, url);
+                document.getElementById("chemical-event-count").innerHTML = eventSourceChemical.getCount();
+            });
+            tl.loadJSON("structure.json", function(json, url) {
+                eventSourceStructure.loadJSON(json, url);
+                document.getElementById("structure-event-count").innerHTML = eventSourceStructure.getCount();
+            });
+            tl.loadJSON("datapub.json", function(json, url) {
+                eventSourceInfo.loadJSON(json, url);
+                document.getElementById("structure-event-count").innerHTML = eventSourceInfo.getCount();
+            });
+            tl.loadJSON("stamps.json", function(json, url) {
+                eventSourceStamp.loadJSON(json, url);
+                document.getElementById("structure-event-count").innerHTML = eventSourceStamp.getCount();
+            });
+
+            setupFilterHighlightControlBar(document.getElementById("filter-controls"), tl, [0,1,2,3,4,5,6,7,8], theme);
+
+            // Get the current date at the centre of the timeline
+            var topBand = tl.getBand(0); 
           
-          tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
+            topBand.addOnScrollListener( function(band) { 
+                var currentyear = new Date(band.getCenterVisibleDate()).getFullYear();
+                document.getElementById("cursor").innerHTML = currentyear; 
+            }); 
+  
+
         }
+        var resizeTimerID = null;
+
+  
+       function centerTimeline(year) {
+            tl.getBand(0).setCenterVisibleDate(new Date(year, 0, 1));
+        }
+
         function onResize() {
             if (resizeTimerID == null) {
                 resizeTimerID = window.setTimeout(function() {
                     resizeTimerID = null;
                     tl.layout();
+                    setSpace();
                 }, 500);
             }
         }
