@@ -7,8 +7,6 @@
     <div id="my-timeline" style="height: 200px; border: 2px solid #aaa"></div>
 
     <script type="text/javascript">
-
-        let _json = new FileReader("C:/Users/The Machine/Desktop/Проект/Новый проект/my project/example1.json")
         var tl;
         Timeline.DefaultEventSource = function(eventIndex) {
             this._events = (eventIndex instanceof Object) ? eventIndex : new Timeline.EventIndex();
